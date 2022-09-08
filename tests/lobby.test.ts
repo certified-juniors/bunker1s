@@ -7,7 +7,6 @@ import { ClientToServerEvents, ServerToClientEvents } from "../shared/events.mod
 import Player from "../shared/player.model";
 import { developmentConfig } from "../config";
 import onConnection from "../src/handlers/onConnection";
-import { DefaultEventsMap } from "@socket.io/component-emitter";
 
 describe("my awesome project", () => {
   let io: Server<ClientToServerEvents, ServerToClientEvents, Player>,

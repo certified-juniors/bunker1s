@@ -1,3 +1,5 @@
 export default interface Player {
-    name: string;
+    nickname: string;
+    lobbyid: string;
+    
 }

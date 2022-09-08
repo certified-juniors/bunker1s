@@ -105,3 +105,4 @@ dist
 
 # Config files
 config.ts
+src/utils/credentials.json
