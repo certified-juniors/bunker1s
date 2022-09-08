@@ -7,7 +7,6 @@ import RoomsList from './Components/RoomsList';
 
 const App = () => {
   return (
-    <div className='appWrapper'>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Login />} />
@@ -15,7 +14,6 @@ const App = () => {
           <Route path='/RoomsList' element={<RoomsList />} />
         </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 
