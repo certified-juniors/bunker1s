@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Rules from './Rules';
 import '../App.css'
+
+
+
 const Login = () => {
     const [name, setName] = useState('');
     const [flag, setFlag] = useState(false);
@@ -27,12 +30,13 @@ const Login = () => {
                     </div>
                     <div className='rulesBtn'>
                         <button className='rulesButton' onClick={() => setFlag(!flag)}>Rules</button>
-                        {flag ? <div className='rules'>
-                            <Rules />
-                            </div> : null}
                     </div>
                 </div>
             </div>
+            {flag ? 
+                <div className='rules'>
+                    <Rules setFlag={setFlag}/>
+                </div> : null}
         </div>
     );
 }

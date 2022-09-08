@@ -189,3 +189,66 @@ html, body {
   margin-bottom: 10px;
   color: #ccc
 }
+
+.RulesOutterContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.RulesInnerContainer {
+  display: inline-block;
+  background-color: #282c34;
+  width: 80%;
+  height: 80%;
+  border-radius: 5px;
+  z-index: 20;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.closeRulesButton {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  font-size: 10px;
+  height:30px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.RulesHeadding {
+  display: flex;
+  flex-direction: row;
+}
+
+.RulesContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  color: white;
+  overflow-y: scroll;
+
+}
+
+.RulesSpan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50%;
+}
+
+.RulesH1 {
+  color: white;
+}
