@@ -46,5 +46,6 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-scroll-to-bottom": "^4.2.0"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
