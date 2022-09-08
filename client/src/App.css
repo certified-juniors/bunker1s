@@ -249,6 +249,25 @@ html, body {
   height: 50%;
 }
 
+.TableList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  height: 450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.TableListWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .RulesH1 {
   color: white;
 }

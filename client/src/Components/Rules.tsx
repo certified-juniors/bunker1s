@@ -102,7 +102,9 @@ const Rules = (props: FlagsProps) => {
                             </span>
                             <span>
                                 <h2>Таблица голосований.</h2>
-                                <p>тут будет таблица голосований</p>
+                                <span className='TableListWrapper'>
+                                    <img className='TableList' src='../TableList.png'></img>
+                                </span>
                             </span>
                         </div>
                     {/* </div> */}
