@@ -14,7 +14,7 @@ const Login = () => {
             </div>
             <div className='introContent'>
                 <div className='introContentInner'>
-                    <h1 className='loginHeading'>Login</h1>
+                    <h1 className='loginHeading'>Вход</h1>
                     <div className='userNameInputForm'>
                         <input placeholder='Username' className='loginInput' type='text' onChange = {(event) => setName(event.target.value)}/>
                     </div>
@@ -27,7 +27,7 @@ const Login = () => {
                         </Link>
                     </div>
                     <div className='rulesBtn'>
-                        <button className='rulesButton' onClick={() => setFlag(!flag)}>Rules</button>
+                        <button className='rulesButton' onClick={() => setFlag(!flag)}>Правила</button>
                     </div>
                 </div>
             </div>

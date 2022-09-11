@@ -7,12 +7,6 @@ const RoomsList = () => {
     const [lobby, setLobby] = useState('');
     const { name } = queryString.parse(window.location.search)
     const number = "123";
-    // useEffect(() => {
-    //     const { name, room } = queryString.parse(window.location.search);
-
-    //     }
-    // }, [SOCKETURL, window.location.search]);
-
 
     return (
         <div className='RoomsList'>
@@ -25,12 +19,10 @@ const RoomsList = () => {
                     </div>
                     <div className='RoomsListContainerInner'>
                         <Link to={`/Lobby?name=${name}&lobby=${lobby}`}>
-                            <button><h3>Room 1</h3><p>5/14</p></button>
+                            <button onClick={()=> setLobby(number)}><h3>Room 1</h3><p>{number}</p></button>
                         </Link>
-                        <button onClick={()=>setLobby(number)}><h3>Room 2</h3><p>{number}</p></button>
                         <button><h3>Room 3</h3><p>5/14</p></button>
                         <button><h3>Room 4</h3><p>5/14</p></button>
-                        <button onClick={() => (console.log(name, lobby))}><h3>Room 5</h3><p>5/14</p></button>
                     </div>
                 </div>
             </div>
