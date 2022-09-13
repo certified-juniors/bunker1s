@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import Player from "../../shared/player.model";
+import Player from "../../client/shared/player.model";
 
 export default function lobbyHandlers(io: Server, socket: Socket & Player) {
     // извлекаем идентификатор комнаты и имя пользователя из объекта сокета

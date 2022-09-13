@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import Card from '../../shared/card.model';
-import SpecCard from '../../shared/speccard.model';
-import Chac from '../../shared/chac.model';
+import Card from '../../client/shared/card.model';
+import SpecCard from '../../client/shared/speccard.model';
+import Chac from '../../client/shared/chac.model';
 
 const GOOGLE_SPREADSHEET_ID = "1rRKfvFjzKkI5rT6Q7vPANhn1NTAZ-7mPaCmoxgtmVu4";
 const CREDENTIALS = require('./credentials.json');
@@ -93,7 +93,6 @@ const getDeck = async () => {
     const speccards = [] as SpecCard[];
     for (let row = 1; row < sheet.rowCount; row++) {
         let cellValue = sheet.getCell(row, SPECCARD_COLUMN).value;
-        console.log(cellValue);
         if (cellValue === null) break;
         const speccard = {
             id: row.toString(),

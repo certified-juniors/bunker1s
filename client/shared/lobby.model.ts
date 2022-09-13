@@ -18,8 +18,8 @@ export default interface Lobby {
 export enum GameState {
     LOBBY = "LOBBY",
     GAME = "GAME",
-    VOTE = "VOTE",
-    RE_VOTE = "RE_VOTE",
+    VOTING = "VOTING",
+    RE_VOTING = "RE_VOTING",
     DISCUSSION = "DISCUSSION",
     EXPLANATION = "EXPLANATION",
     END = "END"

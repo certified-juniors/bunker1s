@@ -3,8 +3,8 @@ import express from "express";
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import { io as ioclient } from "socket.io-client";
-import { ClientToServerEvents, ServerToClientEvents } from "../shared/events.model";
-import Player from "../shared/player.model";
+import { ClientToServerEvents, ServerToClientEvents } from "../client/shared/events.model";
+import Player from "../client/shared/player.model";
 import { developmentConfig } from "../config";
 import onConnection from "../src/handlers/onConnection";
 
