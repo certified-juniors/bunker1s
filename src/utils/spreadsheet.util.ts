@@ -28,7 +28,7 @@ function getPrefix(column: string): string {
     }
 }
 
-export interface Deck {
+export interface CardDeck {
     job: Card[],
     health: Card[],
     hobby: Card[],
@@ -39,8 +39,8 @@ export interface Deck {
     speccards: SpecCard[],
 }
 
-const getDeck = async () => {
-    const deck = {} as Deck;
+async function getCardDeck() : Promise<CardDeck> {
+    const deck = {} as CardDeck;
     const doc = new GoogleSpreadsheet(GOOGLE_SPREADSHEET_ID);
     doc.useServiceAccountAuth(CREDENTIALS)
     await doc.loadInfo();
@@ -105,6 +105,38 @@ const getDeck = async () => {
     return deck;
 };
 
+export interface ConditionsDeck {
+    cataclysms: string[];
+    when_outsides: string[];
+    pos_to_find_someones: string[];
+    destructions: string[];
+    sizes: string[];
+    places: string[];
+}
 
-export default getDeck;
+async function getConditions() : Promise<ConditionsDeck> {
+    const doc = new GoogleSpreadsheet(GOOGLE_SPREADSHEET_ID);
+    doc.useServiceAccountAuth(CREDENTIALS)
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[1];
+    await sheet.loadCells();
+    const res = {
+        cataclysms: [] as string[],
+        when_outsides: [] as string[],
+        pos_to_find_someones: [] as string[],
+        destructions: [] as string[],
+        sizes: [] as string[],
+        places: [] as string[],
+    } as ConditionsDeck;
+    for (let key = 0; key < Object.keys(res).length; key++) {
+        for (let row = 1; row < sheet.rowCount; row++) {
+            let cellValue = sheet.getCell(row, key).value;
+            if (cellValue === null) break;
+            res[Object.keys(res)[key] as keyof ConditionsDeck].push(cellValue.toString());
+        }
+    }
+    return res;
+}
+
+export { getCardDeck, getConditions };
 
