@@ -187,7 +187,7 @@ html, body {
 .loginHeading {
   font-size: 50px;
   margin-bottom: 10px;
-  color: #ccc
+  color: rgb(229, 154, 50);
 }
 
 .RulesOutterContainer {
@@ -269,5 +269,81 @@ html, body {
 }
 
 .RulesH1 {
-  color: white;
+  color: rgb(229, 154, 50);
+}
+
+.history {
+  color: rgb(229, 154, 50);
+}
+
+.gameRules {
+  color: rgb(229, 154, 50);
+}
+
+.fourteebRules {
+  color: rgb(229, 154, 50);
+}
+
+.step1 {
+  color: rgb(229, 154, 50);
+}
+
+.step2 {
+  color: rgb(229, 154, 50);
+}
+
+.step3 {
+  color: rgb(229, 154, 50);
+}
+
+.step4 {
+  color: rgb(229, 154, 50);
+}
+
+.step5 {
+  color: rgb(229, 154, 50);
+}
+
+.step6 {
+  color: rgb(229, 154, 50);
+}
+
+.step7 {
+  color: rgb(229, 154, 50);
+}
+
+.step8 {
+  color: rgb(229, 154, 50);
+}
+
+.step9 {
+  color: rgb(229, 154, 50);
+}
+
+.step10 {
+  color: rgb(229, 154, 50);
+}
+
+.step11 {
+  color: rgb(229, 154, 50);
+}
+
+.step12 {
+  color: rgb(229, 154, 50);
+}
+
+.step13 {
+  color: rgb(229, 154, 50);
+}
+
+.step14 {
+  color: rgb(229, 154, 50);
+}
+
+.resultRule {
+  color: rgb(229, 154, 50);
+}
+
+.ruletable {
+  color: rgb(229, 154, 50);
 }
