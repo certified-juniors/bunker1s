@@ -1,3 +1,5 @@
+// socket io events
+
 interface ClientToServerEvents {
     check_me: (s: string) => void;
     join_lobby: (nickname: string, s: string) => void;

@@ -1,7 +1,6 @@
-import Player from "./player.model";
+import Player from "../general/player.model";
 
-export default interface Voting {
+export default interface Voting { // Revoting same as Voting
     players: Player[]; // Список игроков на голосование
     time_for_vote: number; // Время на голосование в секундах
-    time_for_revote: number; // Время на переголосование в секундах
 }
