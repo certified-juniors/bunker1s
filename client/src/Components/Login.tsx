@@ -19,11 +19,8 @@ const Login = () => {
                         <input placeholder='Username' className='loginInput' type='text' onChange = {(event) => setName(event.target.value)}/>
                     </div>
                     <div className='joinCreateLobby'>
-                        <Link onClick={e => (!name) ? e.preventDefault() : null} to={`/RoomsList?name=${name}`}>
-                            <button className='joinLobbyButton' type='submit'>Join Lobby</button>
-                        </Link>
-                        <Link onClick={e => (!name) ? e.preventDefault() : null} to={`/RoomSettings?name=${name}`}>
-                            <button className='createLobbyButton' type='submit'>Create Lobby</button>
+                        <Link className='linkWrapper' onClick={e => (!name) ? e.preventDefault() : null} to={`/RoomsList?name=${name}`}>
+                            <button className='joinLobbyButton' type='submit'>Войти</button>
                         </Link>
                     </div>
                     <div className='rulesBtn'>

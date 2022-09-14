@@ -128,6 +128,21 @@ html, body {
   width: 110%;
 }
 
+.linkWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+  width: 100%;
+}
+
 .joinLobbyButton {
   background-color: #282c34;
   color: white;
@@ -137,6 +152,7 @@ html, body {
   font-size: 10px;
   width: 100%;
   cursor: pointer;
+  text-align: center;
 }
 
 .createLobbyButton {
@@ -346,4 +362,11 @@ html, body {
 
 .ruletable {
   color: rgb(229, 154, 50);
+}
+
+.joinButtonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 110%;
 }
