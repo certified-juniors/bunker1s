@@ -8,6 +8,7 @@ export default interface Player {
     lobbyready?: boolean; // Готов ли игрок в лобби
     gameready?: boolean; // Готов ли игрок к игре
     disconnected?: boolean; // Отключился ли игрок
+    kicked?: boolean; // Игрок был исключен
     [Chac.HEALTH]?: Card; // Карта здоровья
     [Chac.JOB]?: Card; // Карта профессии
     [Chac.HOBBY]?: Card; // Карта хобби
