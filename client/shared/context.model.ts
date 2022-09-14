@@ -4,6 +4,7 @@ import Discussion from "./game_events/discussion.model";
 import Explanation from "./game_events/explanation.model";
 import Results from "./game_events/results.model";
 import Voting from "./game_events/voting.model";
+import LogMsg from "./game_events/logmsg.model";
 
 export default interface Context {
     player: Player; // Пользователь, получающий контекст (видит свои характеристики)
@@ -15,5 +16,6 @@ export default interface Context {
     voting?: Voting; // Если идет голосование (game_state === VOTING)
     results?: Results; // Если идет подведение итогов (game_state === RESULTS)
     before_game?: boolean; // Если игра еще не началась (не все нажали ready_to_fight)
+    log_msgs?: LogMsg[]; // Лог игровых событий
 }
 
