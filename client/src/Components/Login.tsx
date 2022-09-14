@@ -6,7 +6,7 @@ import '../App.css'
 const Login = () => {
     const [name, setName] = useState('');
     const [flag, setFlag] = useState(false);
-
+    localStorage.setItem('name', name);
     return (
         <div className='intro'>
             <div className='intro__media'>

@@ -9,21 +9,21 @@ const RoomsList = () => {
     const number = "123";
 
     return (
-        <div className='RoomsList'>
-            <div className='RoomsListInnerContainer'>
-                <h1 className='RoomsListHeading'>Rooms List</h1>
-                <div className='RoomsListContainer'>
-                    <div className='RoomsSearc'>
-                        <input placeholder='Search Rooms' className='RoomsListInput' type='text' />
-                        <button className='SearchButton'>Search</button>
-                    </div>
-                    <div className='RoomsListContainerInner'>
-                        <Link to={`/Lobby?name=${name}&lobby=${lobby}`}>
-                            <button onClick={()=> setLobby(number)}><h3>Room 1</h3><p>{number}</p></button>
-                        </Link>
-                        <button><h3>Room 3</h3><p>5/14</p></button>
-                        <button><h3>Room 4</h3><p>5/14</p></button>
-                    </div>
+        <div className='RoomsListWrapper'>
+            <div className='RoomsListHeader'>
+                <button className='ExitButton'><a href='/'>Выход</a></button>
+                <div className='SearchBar'>
+                    <input placeholder='Поиск' className='SearchInput' type='text' onChange = {(event) => setLobby(event.target.value)}/>
+                    <button className='SearchButton' type='submit'>Поиск</button>
+                </div>
+                <button className='CreateLobbyButton'><a href='/RoomSettings' className='cool'>Создать лобби</a></button>
+            </div>
+            <div className='RoomsListBody'>
+                <div className='RoomsListBodyInner'>
+                    <button className='JoinGameButton'>LOBBY 5/14</button>
+                    <button className='JoinGameButton'>LOBBY 5/14</button>
+                    <button className='JoinGameButton'>LOBBY 5/14</button>
+                    <button className='JoinGameButton'>LOBBY 5/14</button>
                 </div>
             </div>
         </div>
