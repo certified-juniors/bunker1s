@@ -12,5 +12,10 @@ export default function lobbyHandlers(io: MyServer, socket: MySocket) {
     socket.on('join_lobby', (nickname: string, lobbyId: string, password: string | null) => {
         lobbyService.joinLobby(socket, io, nickname, lobbyId, password);
     });
-
+    socket.on('leave_lobby', () => {
+        lobbyService.leaveLobby(socket, io);
+    });
+    socket.on('switch_ready', () => {
+        lobbyService.switchReady(socket, io);
+    });
 }
