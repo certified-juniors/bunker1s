@@ -4,13 +4,13 @@ import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import { io as ioclient } from "socket.io-client";
 import { ClientToServerEvents, ServerToClientEvents } from "../client/shared/events.model";
-import Player from "../client/shared/player.model";
+import Player from "../client/shared/general/player.model";
 import { developmentConfig } from "../config";
 import onConnection from "../src/handlers/onConnection";
 
-describe("my awesome project", () => {
+describe("lobby tests", () => {
   let io: Server<ClientToServerEvents, ServerToClientEvents, Player>,
-   serverSocket: Socket, clientSocket: any;
+   serverSocket: any, clientSocket: any;
 
   beforeAll((done) => {
     const app = express()

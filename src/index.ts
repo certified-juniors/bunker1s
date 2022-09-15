@@ -5,7 +5,7 @@ import { developmentConfig, productionConfig } from "../config"
 import { Server } from "socket.io";
 import onConnection from "./handlers/onConnection";
 import { ClientToServerEvents, ServerToClientEvents } from "../client/shared/events.model";
-import Player from "../client/shared/player.model";
+import Player from "../client/shared/general/player.model";
 const isProduction = process.env.NODE_ENV === 'production'
 
 let config: typeof developmentConfig | typeof productionConfig;

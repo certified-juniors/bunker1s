@@ -18,8 +18,10 @@ interface ClientToServerEvents {
     // Должна вызываться при желании игрока переподключиться к лобби
     // Передает никнейм и лобби, в котором находится игрок
     check_me: (lobbyid: Lobby["id"], nickname: Player["nickname"]) => void;
+    // Список лобби, вызовет ивент lobby_list
+    get_lobby_list: () => void;
     // Вход в лобби
-    join_lobby: (nickname: Player["nickname"], lobbyid: Lobby["id"]) => void;
+    join_lobby: (nickname: Player["nickname"], lobbyid: Lobby["id"], password: string | null) => void;
     // Создание лобби
     create_lobby: (nickname: Player["nickname"], lobby: Lobby) => void;
     // Выход из лобби
@@ -61,10 +63,18 @@ interface ServerToClientEvents {
     // Присылается при создании лобби, входе в лобби
     new_lobby: (lobby: Lobby) => void; 
 
+    // Сервер присылает список лобби
+    lobby_list: (lobbies: {
+        id: Lobby["id"];
+        name: Lobby["name"];
+        players: number;
+        isPassword: boolean;
+    }[]) => void;
     // Обновление готовности одного из игроков
     // Присылается при изменении готовности игрока или новом игроке
     update_lobby: (player: Player) => void;
 
+    lobby_left: (playerid: Player["nickname"]) => void;
     // Объявление старта игры
     new_game: (lobby: Lobby) => void;
 
@@ -101,6 +111,11 @@ interface ServerToClientEvents {
     // Обновить условия игры
     update_conditions: (conditions: Conditions) => void;
 
+    // Игрок отключился
+    player_disconnected: (player: Player["nickname"]) => void;
+
+    // Игрок переподключился
+    player_reconnected: (player: Player) => void;
 }
 
 export { ClientToServerEvents, ServerToClientEvents };
