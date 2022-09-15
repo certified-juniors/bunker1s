@@ -21,7 +21,7 @@ interface ClientToServerEvents {
     // Список лобби, вызовет ивент lobby_list
     get_lobby_list: () => void;
     // Вход в лобби
-    join_lobby: (nickname: Player["nickname"], lobbyid: Lobby["id"], password: string | null) => void;
+    join_lobby: (nickname: Player["nickname"], lobbyid: string, password: string | null) => void;
     // Создание лобби
     create_lobby: (nickname: Player["nickname"], lobby: Lobby) => void;
     // Выход из лобби
@@ -65,7 +65,7 @@ interface ServerToClientEvents {
 
     // Сервер присылает список лобби
     lobby_list: (lobbies: {
-        id: Lobby["id"];
+        id: string;
         name: Lobby["name"];
         players: number;
         isPassword: boolean;

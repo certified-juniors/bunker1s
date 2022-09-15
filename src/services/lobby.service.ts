@@ -11,8 +11,8 @@ class LobbyService {
         return this.lobbies[id];
     }
     public createLobby(socket: MySocket, nickname: string, lobby: Lobby) {
-        console.log('createLobby()');
         const lobbyId = this.generateLobbyId();
+        lobby.id = lobbyId;
         lobby.players = []
         socket.data.nickname = nickname;
         lobby.players.push(socket.data as Player);
@@ -34,7 +34,10 @@ class LobbyService {
         });
     }
     public joinLobby(socket: MySocket, io: MyServer, nickname: string, lobbyId: string, password: string | null) {
+        console.log('joinLobby', nickname, lobbyId, password);
+        console.log('lobbies', this.lobbies);
         const lobby = this.getLobby(lobbyId);
+        
         if (!lobby) {
             socket.emit('errormsg', 'Лобби не найдено');
             return;

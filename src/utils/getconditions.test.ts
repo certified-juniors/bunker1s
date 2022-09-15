@@ -23,7 +23,4 @@ describe("getConditions", () => {
     it("should have at least 2 places", () => {
         expect(conditions.places.length).toBeGreaterThanOrEqual(2);
     });
-    afterAll(() => {
-        console.log(conditions);
-    });
 });

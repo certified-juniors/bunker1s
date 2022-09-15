@@ -13,7 +13,7 @@ class GameService {
         return this.games[id];
     }
     public startGame(io: MyServer, socket: MySocket, lobby: Lobby) {
-        this.games[lobby.id] = new Game(io, lobby, this.getShuffledDeck(this.deck!), this.getShuffledConditions(this.conditions!));
+        this.games[lobby.id!] = new Game(io, lobby, this.getShuffledDeck(this.deck!), this.getShuffledConditions(this.conditions!));
     }
     constructor() {
         getCardDeck().then((deck) => {
@@ -60,7 +60,7 @@ class Game {
         });
         this.conditions = this.generateConditions(conditions);
         //TODO implement options
-        io.to(lobby.id).emit('new_game', lobby);
+        io.to(lobby.id!).emit('new_game', lobby);
     }
     private generateConditions(conditions: ConditionsDeck) : Conditions {
         const result: Conditions = {

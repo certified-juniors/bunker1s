@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import Card from '../../client/shared/card.model';
-import SpecCard from '../../client/shared/speccard.model';
-import Chac from '../../client/shared/chac.model';
+import Card from '../../client/shared/general/card.model';
+import SpecCard from '../../client/shared/general/speccard.model';
+import Chac from '../../client/shared/general/chac.model';
 
 const GOOGLE_SPREADSHEET_ID = "1rRKfvFjzKkI5rT6Q7vPANhn1NTAZ-7mPaCmoxgtmVu4";
 const CREDENTIALS = require('./credentials.json');

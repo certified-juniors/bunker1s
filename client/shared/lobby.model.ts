@@ -2,7 +2,7 @@ import Conditions from "./general/conditions.model";
 import Player from "./general/player.model";
 
 export default interface Lobby {
-    id: string; // Код лобби, по которому можно подключиться
+    id?: string; // Код лобби, по которому можно подключиться (Обязательно для лобби, которое уже создано)
     name: string; // Название лобби, которое видит пользователь
     players?: Player[]; // Список игроков в лобби (в порядке очередности хода)
     game_state?: GameState; // Состояние игры
