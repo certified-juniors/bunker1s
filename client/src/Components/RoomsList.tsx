@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
+import { io } from "socket.io-client";
+
+const SOCKETURL = 'localhost:3001';
+const socket = io(SOCKETURL);
 
 const RoomsList = () => {
     const SOCKETURL = 'localhost:3001';
     const [lobby, setLobby] = useState('');
-    const { name } = queryString.parse(window.location.search)
-    const number = "123";
+
+    useEffect(() => {
+    },[SOCKETURL, window.location.search]);
 
     return (
         <div className='RoomsListWrapper'>

@@ -2,11 +2,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Rules from './Rules';
 import '../App.css'
+import { io } from "socket.io-client";
+
+//помещаем name в localStorage
 
 const Login = () => {
     const [name, setName] = useState('');
     const [flag, setFlag] = useState(false);
     localStorage.setItem('name', name);
+
+    const handleSubmit = (event: any) => {
+        event.preventDefault();
+        localStorage.setItem('name', name);
+    }
+
     return (
         <div className='intro'>
             <div className='intro__media'>
@@ -19,9 +28,8 @@ const Login = () => {
                         <input placeholder='Username' className='loginInput' type='text' onChange = {(event) => setName(event.target.value)}/>
                     </div>
                     <div className='joinCreateLobby'>
-                        <Link className='linkWrapper' onClick={e => (!name) ? e.preventDefault() : null} to={`/RoomsList?name=${name}`}>
-                            <button className='joinLobbyButton' type='submit'>Войти</button>
-                        </Link>
+                        {/* <button className='joinLobbyButton' type='submit' onClick={handleSubmit}><a href='/RoomsList'>Войти</a></button> */}
+                        <button className='joinLobbyButton' type='submit' onClick={handleSubmit}><Link to='/RoomsList'>Войти</Link></button>
                     </div>
                     <div className='rulesBtn'>
                         <button className='rulesButton' onClick={() => setFlag(!flag)}>Правила</button>
