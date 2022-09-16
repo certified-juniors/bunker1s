@@ -29,6 +29,7 @@ const RoomsList = () => {
                     <button className='JoinGameButton'>LOBBY 5/14</button>
                     <button className='JoinGameButton'>LOBBY 5/14</button>
                     <button className='JoinGameButton'>LOBBY 5/14</button>
+                
                 </div>
             </div>
         </div>

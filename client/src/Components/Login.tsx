@@ -9,12 +9,11 @@ import { io } from "socket.io-client";
 const Login = () => {
     const [name, setName] = useState('');
     const [flag, setFlag] = useState(false);
-    localStorage.setItem('name', name);
 
     const handleSubmit = (event: any) => {
-        event.preventDefault();
+        // event.preventDefault();
         localStorage.setItem('name', name);
-    }
+    };
 
     return (
         <div className='intro'>
@@ -29,7 +28,9 @@ const Login = () => {
                     </div>
                     <div className='joinCreateLobby'>
                         {/* <button className='joinLobbyButton' type='submit' onClick={handleSubmit}><a href='/RoomsList'>Войти</a></button> */}
-                        <button className='joinLobbyButton' type='submit' onClick={handleSubmit}><Link to='/RoomsList'>Войти</Link></button>
+                        <Link to='/RoomsList'>
+                            <button className='joinLobbyButton' type='submit' onClick={handleSubmit}>Войти</button>
+                        </Link>
                     </div>
                     <div className='rulesBtn'>
                         <button className='rulesButton' onClick={() => setFlag(!flag)}>Правила</button>
