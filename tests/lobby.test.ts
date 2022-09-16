@@ -4,11 +4,11 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { io as ioclient, Socket as SocketClient } from "socket.io-client";
 import { ClientToServerEvents, ServerToClientEvents } from "../client/shared/events.model";
+import Chac from "../client/shared/general/chac.model";
 import Player from "../client/shared/general/player.model";
 import Lobby from "../client/shared/lobby.model";
 import { developmentConfig } from "../config";
 import onConnection from "../src/handlers/onConnection";
-import lobbyService from "../src/services/lobby.service";
 import { MyServer, MySocket } from "../src/types";
 
 describe("lobby tests", () => {
@@ -88,5 +88,23 @@ describe("lobby tests", () => {
       });
       clientSockets[0].emit('get_lobby_list');
     }, 1000);
+  });
+  test("create lobby with all options and start game with 14 players", (done) => {
+    clientSockets[0].on('new_game', (game) => {
+      done()
+    });
+    clientSockets[0].on('new_lobby', (lobby) => {
+      clientSockets[0].emit('switch_ready');
+      for (let i = 1; i < 14; i++) {
+        clientSockets[i].on('new_lobby', (lobby) => {
+          clientSockets[i].emit('switch_ready');
+        });
+        clientSockets[i].emit('join_lobby', `tester${i}`, lobby.id!, "123");
+      }
+    });
+    clientSockets[0].emit('create_lobby', "tester0", {
+      name: 'test',
+      password: '123',
+    } as Lobby);
   });
 });

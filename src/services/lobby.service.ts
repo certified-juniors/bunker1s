@@ -1,5 +1,4 @@
 import Lobby from "../../client/shared/lobby.model";
-import { ClientToServerEvents, ServerToClientEvents } from "../../client/shared/events.model";
 import { MyServer, MySocket } from "../types";
 import Player from "../../client/shared/general/player.model";
 import gameService from "./game.service";
