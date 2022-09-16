@@ -61,14 +61,32 @@ describe("lobby tests", () => {
   test("join primitive lobby", (done) => {
     const clientSocket = clientSockets[1];
     clientSocket.on('lobby_list', (lobbies) => {
-      const lobby = lobbies[0];
       clientSocket.on('new_lobby', (lobby) => {
         expect(lobby.players!.length).toBe(2);
         console.log('lobby joined', lobby);
         done();
       });
-      clientSocket.emit('join_lobby', "tester2", lobby.id!, "123");
+      if (lobbies.length === 0) {
+        clientSocket.emit('create_lobby', "tester2", { name: 'test', password: '123' });
+      }
+      else {
+        clientSocket.emit('join_lobby', "tester2", lobbies[0].id!, "123");
+      }
     });
     clientSocket.emit('get_lobby_list');
+  });
+
+  test("leaving lobbies", (done) => {
+    for (let i = 0; i < 14; i++) {
+      const clientSocket = clientSockets[i];
+      clientSocket.emit('leave_lobby')
+    }
+    setTimeout(() => {
+      clientSockets[0].on('lobby_list', (lobbies) => {
+        expect(lobbies.length).toBe(0);
+        done();
+      });
+      clientSockets[0].emit('get_lobby_list');
+    }, 1000);
   });
 });

@@ -34,8 +34,6 @@ class LobbyService {
         });
     }
     public joinLobby(socket: MySocket, io: MyServer, nickname: string, lobbyId: string, password: string | null) {
-        console.log('joinLobby', nickname, lobbyId, password);
-        console.log('lobbies', this.lobbies);
         const lobby = this.getLobby(lobbyId);
         
         if (!lobby) {
@@ -72,12 +70,12 @@ class LobbyService {
         lobby.players = lobby.players?.filter((player) => player.nickname !== socket.data.nickname);
         io.to(socket.data.lobbyid!).emit('lobby_left', socket.data.nickname!);
         socket.leave(socket.data.lobbyid!);
-        socket.data.lobbyid = undefined
         socket.data.nickname = undefined
         socket.data.lobbyready = false
-        if (lobby.players?.length === 0) {
+        if (lobby.players!.length === 0) {
             delete this.lobbies[socket.data.lobbyid!];
         }
+        socket.data.lobbyid = undefined
     }
     public switchReady(socket: MySocket, io: MyServer) {
         const lobby = this.getLobby(socket.data.lobbyid!);
