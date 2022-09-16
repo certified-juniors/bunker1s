@@ -16,7 +16,7 @@ const RoomsList = () => {
                     <input placeholder='Поиск' className='SearchInput' type='text' onChange = {(event) => setLobby(event.target.value)}/>
                     <button className='SearchButton' type='submit'>Поиск</button>
                 </div>
-                <button className='CreateLobbyButton'><a href='/RoomSettings' className='cool'>Создать лобби</a></button>
+                    <button className='CreateLobbyButton'><a href='/RoomSettings' className='cool'>Создать лобби</a></button>
             </div>
             <div className='RoomsListBody'>
                 <div className='RoomsListBodyInner'>
