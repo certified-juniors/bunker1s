@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Rules from './Rules';
 import '../App.css'
 import { io } from "socket.io-client";
+import e from 'express';
 
 //помещаем name в localStorage
 
@@ -11,7 +12,10 @@ const Login = () => {
     const [flag, setFlag] = useState(false);
 
     const handleSubmit = (event: any) => {
-        // event.preventDefault();
+        if (!name) {
+            event.preventDefault();
+            return;
+        }
         localStorage.setItem('name', name);
     };
 
@@ -27,7 +31,6 @@ const Login = () => {
                         <input placeholder='Username' className='loginInput' type='text' onChange = {(event) => setName(event.target.value)}/>
                     </div>
                     <div className='joinCreateLobby'>
-                        {/* <button className='joinLobbyButton' type='submit' onClick={handleSubmit}><a href='/RoomsList'>Войти</a></button> */}
                         <Link to='/RoomsList'>
                             <button className='joinLobbyButton' type='submit' onClick={handleSubmit}>Войти</button>
                         </Link>

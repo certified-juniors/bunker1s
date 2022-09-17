@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 const RoomSettings = () => {
     const [roomSettingsFlag, setRoomSettingsFlag] = useState(false);
+    const [roomName, setRoomName] = useState('');
+    console.log(roomName);
 
     return (
         <div>
@@ -10,8 +12,8 @@ const RoomSettings = () => {
                     <h1>Room Settings</h1>
                 </div>
                 <div>
-                    <input placeholder='Room Name' type='text' />
-                    <input placeholder='Room Password' type='text' />
+                    <input placeholder='Room Name' type='text' onChange = {(event) => setRoomName(event.target.value)}/>
+                    <input placeholder='Room Password' type='text'/>
                 </div>
                 <div>
                     <input type='checkbox' onChange={() => setRoomSettingsFlag(!roomSettingsFlag)}/><p>Room Settings</p>

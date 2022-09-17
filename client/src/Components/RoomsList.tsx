@@ -10,8 +10,7 @@ const RoomsList = () => {
     const SOCKETURL = 'localhost:3001';
     const [lobby, setLobby] = useState('');
 
-    useEffect(() => {
-    },[SOCKETURL, window.location.search]);
+    
 
     return (
         <div className='RoomsListWrapper'>
@@ -21,7 +20,9 @@ const RoomsList = () => {
                     <input placeholder='Поиск' className='SearchInput' type='text' onChange = {(event) => setLobby(event.target.value)}/>
                     <button className='SearchButton' type='submit'>Поиск</button>
                 </div>
-                    <button className='CreateLobbyButton'><a href='/RoomSettings' className='cool'>Создать лобби</a></button>
+                <Link to='/RoomSettings'>
+                    <button className='CreateLobbyButton'>Создать лобби</button>
+                </Link>
             </div>
             <div className='RoomsListBody'>
                 <div className='RoomsListBodyInner'>
