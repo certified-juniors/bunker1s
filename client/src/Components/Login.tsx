@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Rules from './Rules';
 import '../App.css'
-import { io } from "socket.io-client";
-import e from 'express';
+import { localStorageWrapper } from '../localStorage';
 
 //помещаем name в localStorage
 
@@ -16,7 +15,7 @@ const Login = () => {
             event.preventDefault();
             return;
         }
-        localStorage.setItem('name', name);
+        localStorageWrapper.set('name', name);
     };
 
     return (

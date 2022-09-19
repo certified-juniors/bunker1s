@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import queryString from 'query-string';
-import { io } from "socket.io-client";
+import { localStorageWrapper } from '../localStorage';
+import { io, Socket } from "socket.io-client";
+import { ClientToServerEvents, ServerToClientEvents } from "../../shared/events.model";
 
 //              Client.
 //emit - send a message to the server.
@@ -10,31 +11,26 @@ import { io } from "socket.io-client";
 //emit - send a message to the client.
 //on - receive a message from the client.
 
-const RoomsList = () => {
-    const SOCKETURL = 'localhost:3000';
-    const [lobby, setLobby] = useState([]);
-    const name = localStorage.getItem('name');
+const SOCKETURL = 'http://localhost:3000';
+const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKETURL);
+localStorageWrapper.set('socket', socket);
 
-    const socket = io(SOCKETURL, { transports: ['websocket'] });
+const RoomsList = () => {
+    const [lobbies, setLobbies] = useState([] as {
+        id: string;
+        name: string;
+        players: number;
+        isPassword: boolean;
+    }[]);
+    const name = localStorageWrapper.get('name');
 
     useEffect(() => {
-        socket.emit('join', { name }, (error: unknown) => {
-            if (error) {
-                console.log(error);
-            }
+        socket.on('lobby_list', (lobby) => {
+            setLobbies(lobby);
+            console.log(lobby);
         });
-
-        socket.emit('get_lobby_list', (rooms: any) => {     //отправляем запрос на сервер для получения списка комнат
-            socket.on('lobby_list', (rooms: any) => {       //получаем список комнат с сервера
-                setLobby(rooms);
-            });
-        });
-
-        return () => {
-            socket.emit('disconnect');
-            socket.off();
-        }
-    }, [SOCKETURL, name]);
+        socket.emit('get_lobby_list');
+    }, []);
 
     return (
         <div className='RoomsListWrapper'>
@@ -51,16 +47,16 @@ const RoomsList = () => {
             <div className='RoomsListBody'>
                 <div className='RoomsListBodyInner'>
                     {
-                        lobby.map((room: any) => (
-                            <div className='Room'>
-                                <div className='RoomName'>
-                                    <p>{room.name}</p>
+                        lobbies.map((lobby) => {
+                            return (
+                                <div className='Room' key={lobby.id}>
+                                    <div className='RoomName'>{lobby.name}</div>
+                                    <div className='RoomPlayers'>{lobby.players}/14</div>
+                                    <div className='RoomPassword'>{lobby.isPassword ? 'Пароль' : ''}</div>
+                                    <button className='RoomButton'>Войти</button>
                                 </div>
-                                <div className='RoomPlayers'>
-                                    <p>{room.players}</p>
-                                </div>
-                            </div>
-                        ))
+                            )
+                        }, [])
                     }
                 </div>
             </div>

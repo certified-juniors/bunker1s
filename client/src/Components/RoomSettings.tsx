@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { io } from "socket.io-client";
+import Conditions from '../../shared/general/conditions.model';
+import { localStorageWrapper } from '../localStorage';
+
+const Socket = localStorageWrapper.get('socket');
+
 const RoomSettings = () => {
     const [roomSettingsFlag, setRoomSettingsFlag] = useState(false);
     const [roomName, setRoomName] = useState('');
-    console.log(roomName);
-    
-    const SOCKETURL = 'localhost:3000';
-    const socket = io(SOCKETURL, { transports: ['websocket'] });
-    const name = localStorage.getItem('name');
 
-    const handleSubmit = (event: any) => {
-        if (!roomName) {
-            event.preventDefault();
-            return;
-        }
-        socket.emit('create_lobby', { name, roomName }, (error: unknown) => {
-            if (error) {
-                console.log(error);
-            }
-        });
-    }
+    
 
     return (
         <div>
@@ -47,7 +37,7 @@ const RoomSettings = () => {
                         </div> : null}
                 </div>
                 <div>
-                    <button onClick={handleSubmit}>Создать лобби</button>
+                    <button>Создать лобби</button>
                 </div>
             </div>
         </div>
