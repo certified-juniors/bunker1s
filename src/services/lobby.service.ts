@@ -1,4 +1,4 @@
-import Lobby from "../../client/shared/lobby.model";
+import Lobby, { GameState } from "../../client/shared/lobby.model";
 import { MyServer, MySocket } from "../types";
 import Player from "../../client/shared/general/player.model";
 import gameService from "./game.service";
@@ -10,9 +10,22 @@ class LobbyService {
         return this.lobbies[id];
     }
     public createLobby(socket: MySocket, nickname: string, lobby: Lobby) {
+        if (socket.data.lobbyid) {
+            socket.emit('errormsg', 'Вы уже находитесь в лобби');
+            return;
+        }
+        if (lobby.name.length > 20) {
+            socket.emit('errormsg', 'Название лобби не может быть длиннее 20 символов');
+            return;
+        }
+        if (lobby.password && lobby.password.length > 20) {
+            socket.emit('errormsg', 'Пароль не может быть длиннее 20 символов');
+            return;
+        }
         const lobbyId = this.generateLobbyId();
         lobby.id = lobbyId;
-        lobby.players = []
+        lobby.players = [];
+        lobby.game_state = GameState.LOBBY;
         socket.data.nickname = nickname;
         lobby.players.push(socket.data as Player);
         this.lobbies[lobbyId] = lobby;
@@ -34,7 +47,6 @@ class LobbyService {
     }
     public joinLobby(socket: MySocket, io: MyServer, nickname: string, lobbyId: string, password: string | null) {
         const lobby = this.getLobby(lobbyId);
-        
         if (!lobby) {
             socket.emit('errormsg', 'Лобби не найдено');
             return;

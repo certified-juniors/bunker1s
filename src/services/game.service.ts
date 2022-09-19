@@ -1,4 +1,4 @@
-import Lobby from "../../client/shared/lobby.model";
+import Lobby, { GameState } from "../../client/shared/lobby.model";
 import { MyServer, MySocket } from "../types";
 import { CardDeck, ConditionsDeck, getCardDeck, getConditions } from "../utils/spreadsheet.util";
 import Chac from "../../client/shared/general/chac.model";
@@ -58,9 +58,10 @@ class Game {
         lobby.players.forEach((player) => {
             this.distributeCards(player, deck);
         });
+        lobby.game_state = GameState.GAME;
         this.conditions = this.generateConditions(conditions);
         //TODO implement options
-        io.to(lobby.id!).emit('new_game', lobby);
+        this.emitNewGame(io);
     }
     private generateConditions(conditions: ConditionsDeck) : Conditions {
         const result: Conditions = {
@@ -98,6 +99,44 @@ class Game {
         player[Chac.BAGGAGE] = deck.baggage.pop();
         player.speccard1 = deck.speccards.pop();
         player.speccard2 = deck.speccards.pop();
+    }
+    private getCodedLobby(nickname: string) : Lobby {
+        const lobbyCopy = JSON.parse(JSON.stringify(this.lobby)) as Lobby;
+        for (let i = 0; i < lobbyCopy.players!.length; i++) {
+            if (lobbyCopy.players![i].nickname !== nickname) {
+                const player = lobbyCopy.players![i];
+                player[Chac.JOB]!.name = player[Chac.JOB]!.isopen ? player[Chac.JOB]!.name : '*****';
+                player[Chac.HEALTH]!.name = player[Chac.HEALTH]!.isopen ? player[Chac.HEALTH]!.name : '*****';
+                player[Chac.HOBBY]!.name = player[Chac.HOBBY]!.isopen ? player[Chac.HOBBY]!.name : '*****';
+                player[Chac.QUALITY]!.name = player[Chac.QUALITY]!.isopen ? player[Chac.QUALITY]!.name : '*****';
+                player[Chac.PHOBIA]!.name = player[Chac.PHOBIA]!.isopen ? player[Chac.PHOBIA]!.name : '*****';
+                player[Chac.INFO]!.name = player[Chac.INFO]!.isopen ? player[Chac.INFO]!.name : '*****';
+                player[Chac.BAGGAGE]!.name = player[Chac.BAGGAGE]!.isopen ? player[Chac.BAGGAGE]!.name : '*****';
+                player.speccard1!.name = player.speccard1!.used ? player.speccard1!.name : '*****';
+                player.speccard2!.name = player.speccard2!.used ? player.speccard2!.name : '*****';
+            }
+        }
+        return lobbyCopy;
+    }
+    private getSocketByNickname(io: MyServer, nickname: string) : MySocket | undefined {
+        const socketRoom = io.sockets.adapter.rooms.get(this.lobby.id!);
+        if (socketRoom) {
+            for (const socketId of socketRoom) {
+                const socket = io.sockets.sockets.get(socketId);
+                if (socket && socket.data.nickname === nickname && !socket.disconnected) {
+                    return socket;
+                }
+            }
+        }
+        return undefined;
+    }
+    private emitNewGame(io: MyServer) : void {
+        for (const player of this.lobby.players!) {
+            const socket = this.getSocketByNickname(io, player.nickname);
+            if (socket) {
+                socket.emit('new_game', this.getCodedLobby(player.nickname));
+            }
+        }
     }
 }
 

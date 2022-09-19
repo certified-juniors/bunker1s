@@ -36,9 +36,6 @@ describe("lobby tests", () => {
         client.on('connect', () => {
           if (index === 13) done();
         });
-        client.onAny((event, ...args) => {
-          console.log(`client ${index} event: ${event}, args: ${args}`);
-        });
       });
     });
   });
@@ -49,9 +46,7 @@ describe("lobby tests", () => {
   test("create primitive lobby", (done) => {
     const clientSocket = clientSockets[0];
     clientSocket.on('new_lobby', (lobby) => {
-      console.log('new_lobby', lobby);
       expect(lobby.id).toBeDefined();
-      console.log('lobby created', lobby);
       done();
     });
     clientSocket.emit('create_lobby', "tester1", { name: 'test', password: '123' });
@@ -63,7 +58,6 @@ describe("lobby tests", () => {
     clientSocket.on('lobby_list', (lobbies) => {
       clientSocket.on('new_lobby', (lobby) => {
         expect(lobby.players!.length).toBe(2);
-        console.log('lobby joined', lobby);
         done();
       });
       if (lobbies.length === 0) {
@@ -97,14 +91,14 @@ describe("lobby tests", () => {
       clientSockets[0].emit('switch_ready');
       for (let i = 1; i < 14; i++) {
         clientSockets[i].on('new_lobby', (lobby) => {
-          clientSockets[i].emit('switch_ready');
+          setTimeout(() => clientSockets[i].emit('switch_ready'), 100);
         });
         clientSockets[i].emit('join_lobby', `tester${i}`, lobby.id!, "123");
       }
     });
-    clientSockets[0].emit('create_lobby', "tester0", {
+    setTimeout(() => clientSockets[0].emit('create_lobby', "tester0", {
       name: 'test',
       password: '123',
-    } as Lobby);
-  });
+    } as Lobby), 100);
+  }, 10000);
 });
