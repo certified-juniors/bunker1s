@@ -6,20 +6,23 @@ import Player from "../../client/shared/general/player.model";
 import Conditions from "../../client/shared/general/conditions.model";
 
 class GameService {
-    private deck: CardDeck | undefined;
-    private conditions: ConditionsDeck | undefined;
+    public deck: CardDeck | Promise<void | CardDeck>;
+    public conditions: ConditionsDeck | Promise<void | ConditionsDeck>;
     private games: { [key: string]: Game } = {};
     public getGame(id: string): Game | undefined {
         return this.games[id];
     }
     public startGame(io: MyServer, socket: MySocket, lobby: Lobby) {
+        if (this.deck instanceof Promise || this.conditions instanceof Promise) {
+            return;
+        }
         this.games[lobby.id!] = new Game(io, lobby, this.getShuffledDeck(this.deck!), this.getShuffledConditions(this.conditions!));
     }
     constructor() {
-        getCardDeck().then((deck) => {
+        this.deck = getCardDeck().then((deck) => {
             this.deck = deck;
         });
-        getConditions().then((conditions) => {
+        this.conditions = getConditions().then((conditions) => {
             this.conditions = conditions;
         });
     }

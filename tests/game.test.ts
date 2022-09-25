@@ -10,6 +10,7 @@ import Player from "../client/shared/general/player.model";
 import { GameState } from "../client/shared/lobby.model";
 import { developmentConfig } from "../config";
 import onConnection from "../src/handlers/onConnection";
+import gameService from "../src/services/game.service";
 import { MyServer, MySocket } from "../src/types";
 
 describe("game tests", () => {
@@ -18,9 +19,10 @@ describe("game tests", () => {
     let context: Context = {
         lobby: {
             name: "test",
+            players: [],
         },
         player: {
-            nickname: "tester13",
+            nickname: "tester0",
         },
         game_state: GameState.LOBBY,
     };
@@ -36,60 +38,65 @@ describe("game tests", () => {
             cors: { origin: developmentConfig.allowedOrigin },
             serveClient: false,
         })
-        server.listen(3001, () => {
-            for (let i = 0; i < 14; i++) clientSockets.push(ioclient("http://localhost:3001"));
-            io.on('connection', (socket) => {
-                onConnection(io, socket);
-                serverSocket = socket;
-            })
-            for (let index = 0; index < 14; index++) {
-                const client = clientSockets[index];
-                client.onAny((event, ...args) => {
-                    if (index == 13 || index == 0) console.log(`client ${index} event: ${event}, args: ${args}`);
+        function servlist() {
+            server.listen(3001, () => {
+                for (let i = 0; i < 14; i++) clientSockets.push(ioclient("http://localhost:3001"));
+                io.on('connection', (socket) => {
+                    onConnection(io, socket);
+                    serverSocket = socket;
                 });
-                client.on('connect', () => {
-                    if (index === 0) {
-                        client.emit('create_lobby', "tester0", { name: 'test', password: '123' });
-                    } else {
-                        client.emit('join_lobby', "tester" + index, '0', '123')
-                    }
+                clientSockets[0].on('new_game', (lobby) => {
+                    context.lobby = lobby;
+                    context.player = lobby.players!.find((p) => p.nickname === context.player.nickname)!;
+                    context.game_state = GameState.GAME;
+                    done();
                 });
-                client.on('new_game', (lobby) => {
-                    if (index === 13) {
-                        context = {
-                            player: lobby.players!.filter(player => player.nickname === 'tester13')[0],
-                            game_state: lobby.game_state!,
-                            lobby: lobby,
-                            before_game: true,
-                        } as Context;
-                        done();
-                    }
-                });
-                client.on('new_lobby', (lobby) => {
-                    if (index != 0) {
-                        client.emit('switch_ready');
-                    }
-                });
-                client.on('update_lobby', (player) => {
-                    if (index === 0) {
-                        if (!player.disconnected) {
-                            context.lobby.players!.push(player);
+                clientSockets[0].on("connect", () => {
+                    clientSockets[0].on('errormsg', (msg) => {
+                        done.fail(msg);
+                    });
+                    clientSockets[0].on('new_lobby', (lobby) => {
+                        clientSockets[0].on('update_lobby', (player) => {         
+                            if (player.disconnected) {
+                                context.lobby.players = context.lobby.players!.filter(p => p.nickname !== player.nickname);
+                            } else if (player.nickname in context.lobby.players!.map(p => p.nickname)) {
+                                const index = context.lobby.players!.findIndex(p => p.nickname === player.nickname);
+                                context.lobby.players![index] = player;
+                            } else {
+                                context.lobby.players!.push(player);
+                            }
+                            if (context.lobby.players!.length === 14) {
+                                clientSockets[0].emit('switch_ready');
+                            }
+                        });
+                        context.lobby = lobby;
+                        for (let i = 1; i < 14; i++) {
+                            clientSockets[i].on("errormsg", (msg) => {
+                                console.log(i, msg);
+                            });
+                            clientSockets[i].on('new_lobby', (lobby) => {
+                                clientSockets[i].emit('switch_ready');
+                            });
+                            clientSockets[i].emit("join_lobby", `tester${i}`, lobby.id!, null);
                         }
-                        console.log(context.lobby.players!.length);
-                        if (context.lobby.players!.length === 14) {
-                            client.emit('switch_ready');
-                        }
-                    }
+
+                    });
+                    clientSockets[0].emit("create_lobby", "tester0", { name: "test" });
                 });
-            }
-        });
-    }, 20000);
+                
+            });
+        }
+        if (gameService.conditions instanceof Promise) {
+            gameService.conditions.then(() => servlist());
+        } else {
+            servlist();
+        }
+    });
     afterAll(() => {
         io.close();
         clientSockets.forEach((client) => client.close());
     });
     test('check context for open me and hidden others', () => {
-        console.log(context.lobby);
         expect(context.player[Chac.HEALTH]?.name).not.toBe("*****");
         expect(context.lobby.players![0][Chac.HEALTH]?.name).toBe("*****");
     });
