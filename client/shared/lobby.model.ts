@@ -8,7 +8,7 @@ export default interface Lobby {
     game_state?: GameState; // Состояние игры
     password?: string; // Пароль для входа в лобби
     options?: (Conditions) & {
-        time_to_open_card: number; // Время на открытие карты
+        time_to_open_card?: number; // Время на открытие карты
         time_for_vote?: number; // Время на голосование в секундах default: 60
         time_for_revote?: number; // Время на переголосование в секундах default: 15
         time_for_results?: number; // Время на отображение результатов голосования default: 5

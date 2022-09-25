@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { localStorageWrapper } from '../localStorage';
-import { io, Socket } from "socket.io-client";
-import { ClientToServerEvents, ServerToClientEvents } from "../../shared/events.model";
+import {get_lobby_list} from '../API';
 
 //              Client.
 //emit - send a message to the server.
@@ -10,10 +9,6 @@ import { ClientToServerEvents, ServerToClientEvents } from "../../shared/events.
 //              Server.
 //emit - send a message to the client.
 //on - receive a message from the client.
-
-const SOCKETURL = 'http://localhost:3000';
-const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKETURL);
-localStorageWrapper.set('socket', socket);
 
 const RoomsList = () => {
     const [lobbies, setLobbies] = useState([] as {
@@ -23,13 +18,11 @@ const RoomsList = () => {
         isPassword: boolean;
     }[]);
     const name = localStorageWrapper.get('name');
-
+    
     useEffect(() => {
-        socket.on('lobby_list', (lobby) => {
-            setLobbies(lobby);
-            console.log(lobby);
+        get_lobby_list().then((data) => {
+            setLobbies(data);
         });
-        socket.emit('get_lobby_list');
     }, []);
 
     return (

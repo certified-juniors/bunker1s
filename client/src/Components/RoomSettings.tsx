@@ -3,13 +3,9 @@ import { io } from "socket.io-client";
 import Conditions from '../../shared/general/conditions.model';
 import { localStorageWrapper } from '../localStorage';
 
-const Socket = localStorageWrapper.get('socket');
-
 const RoomSettings = () => {
     const [roomSettingsFlag, setRoomSettingsFlag] = useState(false);
     const [roomName, setRoomName] = useState('');
-
-    
 
     return (
         <div>
