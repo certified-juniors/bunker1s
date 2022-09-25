@@ -22,6 +22,10 @@ class LobbyService {
             socket.emit('errormsg', 'Пароль не может быть длиннее 20 символов');
             return;
         }
+        if (lobby.name in Object.values(this.lobbies).map((lobby) => lobby.name)) {
+            socket.emit('errormsg', 'Лобби с таким названием уже существует');
+            return;
+        }
         const lobbyId = this.generateLobbyId();
         lobby.id = lobbyId;
         lobby.players = [];
@@ -93,6 +97,10 @@ class LobbyService {
         if (!lobby) return;
         const player = lobby.players?.find((player) => player.nickname === socket.data.nickname);
         if (!player) return;
+        if (lobby.game_state !== GameState.LOBBY) {
+            socket.emit('errormsg', 'Игра уже началась');
+            return;
+        }
         player.lobbyready = !player.lobbyready;
         socket.data.lobbyready = player.lobbyready;
         io.to(socket.data.lobbyid!).emit('update_lobby', player);
