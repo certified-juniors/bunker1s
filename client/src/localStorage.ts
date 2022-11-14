@@ -39,7 +39,6 @@ class StorageWrapper {
         if (!this.storage) return;
         try {
             const stringValue = JSON.stringify(value);
-            // this.storage.setItem(key, stringValue);
         }
         catch (error) {
             console.error(error);
