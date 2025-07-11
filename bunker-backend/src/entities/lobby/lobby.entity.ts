@@ -1,4 +1,5 @@
 import { LOBBY_STATE } from "./lobbyState.enum";
+import {Player} from "../player";
 
 /**
  * Класс, описывающий игровое лобби.
@@ -11,8 +12,7 @@ export class Lobby {
     hostName: string;
 
     /** Список имён игроков, находящихся в лобби */
-    // TODO: Change players to Player class
-    players: string[] = [];
+    players: Player[] = [];
 
     /** Текущее состояние лобби */
     state: LOBBY_STATE = LOBBY_STATE.WAITING;

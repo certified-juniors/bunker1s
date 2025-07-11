@@ -1,5 +1,5 @@
-import {Injectable} from "@nestjs/common";
-import {Lobby, LOBBY_STATE} from "../../entities";
+import {BadRequestException, Injectable, NotFoundException} from "@nestjs/common";
+import {Lobby, LOBBY_STATE, Player} from "../../entities";
 import {CreateLobbyDTO} from "../../handlers";
 import {randomUUID} from 'crypto';
 
@@ -23,5 +23,21 @@ export class LobbyService {
 
     listLobbies(): Lobby[] {
         return Array.from(this.lobbies.values()).filter(lobby => lobby.state === LOBBY_STATE.WAITING)
+    }
+
+    joinLobby(lobbyId: string, player: Player): Lobby {
+        const lobby = this.lobbies.get(lobbyId);
+
+        if (!lobby) {
+            throw new NotFoundException(`Лобби с ID ${lobbyId} не найдено`);
+        }
+
+        if (lobby.players.includes(player)) {
+            throw new BadRequestException(`Игрок с ${player.name} already in lobby`);
+        }
+
+        lobby.players.push(player);
+
+        return lobby;
     }
 }

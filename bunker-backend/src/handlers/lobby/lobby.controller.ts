@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Param, Post} from "@nestjs/common";
 import {CreateLobbyDTO} from "./lobby.dto";
-import { Lobby } from '../../entities';
+import {Lobby, Player} from '../../entities';
 import {LobbyService} from "../../services";
 
 @Controller('lobby')
@@ -20,5 +20,13 @@ export class LobbyController {
     @Get(':id')
     get(@Param('id') id: string): Lobby | undefined {
         return this.lobbyService.getLobby(id);
+    }
+
+    @Post(':id/join')
+    joinLobby(
+        @Param('id') id: string,
+        @Body('player') player: Player
+    ) {
+        return this.lobbyService.joinLobby(id, player);
     }
 }
