@@ -6,7 +6,7 @@ export * from './hobby'
 
 export * from './luggage'
 
-export * from './phoby'
+export * from './phobia'
 
 export * from './additionalInfo'
 
