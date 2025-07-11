@@ -4,3 +4,5 @@
 .env.prod
 .env.develop
 .env.qa
+
+./bunker-backend/node_modules
