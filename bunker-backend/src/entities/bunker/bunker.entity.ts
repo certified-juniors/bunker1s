@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 /**
  * Бункер и его характеристики
  */
-@Injectable()
 export class Bunker {
     /**
      * @param description Описание катастрофы

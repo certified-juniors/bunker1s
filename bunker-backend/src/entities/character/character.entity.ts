@@ -13,7 +13,6 @@ import {
 /**
  * Персонаж и его характеристики
  */
-@Injectable()
 export class Character {
     /**
      * @param name Имя персонажа
