@@ -1,3 +1,5 @@
+import {Character} from "../character";
+
 /**
  * Класс, описывающий игрока
  */
@@ -7,6 +9,9 @@ export class Player {
 
     /** Флаг, указывающий, является ли игрок хозяином лобби */
     isHost: boolean = false;
+
+    /** Персонаж игрока */
+    character: Character;
 
     /**
      * Создает новый экземпляр игрока

@@ -1,3 +1,7 @@
 export abstract class BaseCard {
-    readonly type: string;
+    readonly name: string;
+
+    protected constructor(name: string) {
+        this.name = name;
+    }
 }
